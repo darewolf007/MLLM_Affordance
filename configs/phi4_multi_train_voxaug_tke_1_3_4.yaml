@@ -1,0 +1,95 @@
+model:
+  arch: aff_phi_multi_voxaug_tke
+  model_type: phi_default
+  llm_model_type: phi4
+
+  load_finetuned: True
+  finetuned: /hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM_SHW/outputs_new/phi4_multi_voxaug_tke_a1_3_4_shareattn16/20260402074/checkpoint_16.pth
+
+  max_txt_len: 128
+  max_output_txt_len: 128
+  prompt_encoder_dim: 32
+
+  point_enhanced: False
+  learned_noise: False
+  noise_std: 0.002
+
+  # ===== Voxel Token MultiScale =====
+  enable_voxel_token: True
+  vqvae_checkpoint: "/hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM/model_pre/3DVQVAE/3DVQVAE.bin"
+  vqvae_num_embeddings: 8192
+  voxel_spatial_res: 4
+  enhance_feature_injector: False
+
+  # ===== [E] Ablation 3: shared cross_attn (reduce params) =====
+  voxel_uniform_pool_res: 0
+  voxel_use_decoder: False
+  voxel_share_attn: True
+  voxel_dropout: 0.15
+
+  # Load pretrained baseline
+  load_pretrained: False
+  # pretrained: "/hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM_SHW/outputs_new/phi4_multi_voxaug/20260313133/checkpoint_best.pth"
+
+  point_model_config_path: "/data1/user/zhangshaolong/3D_ADLLM/configs/models/PointTransformer_2048point.yaml"
+
+  llm_model: "/data1/user/zhangshaolong/3D_ADLLM/model_pre/Phi_4_mini_instruct"
+  lora_llm_finetune: True
+  freeze_llm: True
+
+  lora_r: 32
+  lora_alpha: 48
+
+  freeze_point: True
+  free_seg_point_encoder: False
+  seg_point_encoder_config_path: "/data1/user/zhangshaolong/3D_ADLLM/models/openad/config/PT_modify.py"
+  seg_point_encoder_path: "/data1/user/zhangshaolong/3D_ADLLM/model_pre/ckpts/PointBackbone/best_model.t7"
+  freeze_linear: False
+
+  train_aff_encoder: True
+  train_aff_decoder: False
+  aff_path: "/data1/user/zhangshaolong/3D_ADLLM/model_pre/ckpts/PointBackbone/best_model.t7"
+
+  ce_loss_weight: 1.0
+  dice_loss_weight: 1.0
+  bce_loss_weight: 1.0
+
+  uselabelratio: True
+  label_ratio_path: "/data1/user/zhangshaolong/3D_ADLLM/result_ratio.json"
+
+run:
+  init_lr: 3e-4
+  min_lr: 1e-6
+  warmup_lr: 1e-8
+  weight_decay: 0
+  max_epoch: 20
+  batch_size_train: 8
+  batch_size_eval: 16
+  num_workers: 2
+
+  warmup_steps: 120
+  iters_per_epoch: 2320
+  accum_grad_iters: 4
+  device: "cuda"
+  find_unused_parameters: True
+
+  seed: 1
+  output_dir: "/hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM_SHW/outputs_new/phi4_multi_voxaug_tke_a1_3_4_shareattn16"
+
+  mixed_precision: 'bf16'
+  evaluate: False
+
+train_datasets:
+  3D_Affordance_train_new_prompt:
+    type: affordance
+    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/train_data_new_prompt.pkl
+
+eval_datasets:
+  3D_Affordance_val_new_prompt:
+    type: affordance
+    eval_type: affordance_acc
+    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/val_data_new_prompt.pkl
+  3D_Affordance_openval_new_prompt:
+    type: affordance
+    eval_type: affordance_acc
+    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/openval_data_new_prompt.pkl

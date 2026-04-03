@@ -1,0 +1,13 @@
+outputs/
+.hypothesis/
+__pycache__/
+*.log
+wandb/
+*.pyc
+model_pre/
+__pycache__/
+data/
+old/
+*.whl
+others/
+.vscode/

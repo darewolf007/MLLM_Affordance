@@ -1,0 +1,6 @@
+3D_Affordance_train_new_prompt:
+  ann_path: "/data1/user/zhangshaolong/3D_ADLLM/data/multi_data/train_data_new_prompt.pkl"
+3D_Affordance_val_new_prompt:
+  ann_path: "/data1/user/zhangshaolong/3D_ADLLM/data/multi_data/val_data_new_prompt.pkl"
+3D_Affordance_openval_new_prompt:
+  ann_path: "/data1/user/zhangshaolong/3D_ADLLM/data/multi_data/openval_data_new_prompt.pkl"  
