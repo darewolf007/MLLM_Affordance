@@ -63,33 +63,35 @@ run:
   warmup_lr: 1e-8
   weight_decay: 0
   max_epoch: 20
-  batch_size_train: 8
-  batch_size_eval: 16
+  batch_size_train: 4
+  batch_size_eval: 8
   num_workers: 2
 
   warmup_steps: 120
   iters_per_epoch: 2320
-  accum_grad_iters: 4
+  accum_grad_iters: 8
   device: "cuda"
   find_unused_parameters: True
 
   seed: 1
-  output_dir: "/hard_data2/user_dataset/sunhaowen_dataset/affordance/voxafford/phi4_multi_voxaug_tke"
+  output_dir: "/hard_data2/user_dataset/sunhaowen_dataset/affordance/voxafford/phi4_multi_voxaug_tke_partial"
 
   mixed_precision: 'bf16'
   evaluate: False
 
 train_datasets:
+
   3D_Affordance_train_new_prompt:
     type: affordance
-    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/train_data_new_prompt.pkl
+    path: /data1/user/zhangshaolong/3D_ADLLM/data/multi_data/partial_view_train_data_with_prompt.pkl
 
 eval_datasets:
+
   3D_Affordance_val_new_prompt:
     type: affordance
     eval_type: affordance_acc
-    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/val_data_new_prompt.pkl
+    path: /data1/user/zhangshaolong/3D_ADLLM/data/multi_data/partial_view_val_data_with_prompt.pkl
   3D_Affordance_openval_new_prompt:
     type: affordance
     eval_type: affordance_acc
-    path: /data1/user/zhangshaolong/3D_ADLLM_ZSL/data/cot_multi_token_data_v1/openval_data_new_prompt.pkl
+    path: /data1/user/zhangshaolong/3D_ADLLM/data/multi_data/partial_view_openval_data_with_prompt.pkl

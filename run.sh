@@ -119,6 +119,10 @@ CUDA_VISIBLE_DEVICES=0 TOKENIZERS_PARALLELISM=true  torchrun --master_port 28309
 CUDA_VISIBLE_DEVICES=2 TOKENIZERS_PARALLELISM=true  torchrun --master_port 25467 --nproc_per_node=1 eval.py --cfg-path /data1/user/zhangshaolong/3D_ADLLM_SHW/configs/phi4_multi_train_voxaug_tke_1_3_4_eval.yaml --checkpoint /hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM_SHW/best_full.pth
 
 
+CUDA_VISIBLE_DEVICES=2 TOKENIZERS_PARALLELISM=true  torchrun --master_port 18309 --nproc_per_node=1 train.py --cfg-path /data2/user/sunhaowen/hw_mine/3D_ADLLM_SHW/configs/phi4_multi_train_voxaug_tke_1_3_4_partial.yaml
+CUDA_VISIBLE_DEVICES=0 TOKENIZERS_PARALLELISM=true  torchrun --master_port 28309 --nproc_per_node=1 train.py --cfg-path /data2/user/sunhaowen/hw_mine/3D_ADLLM_SHW/configs/phi4_multi_train_voxaug_tke_1_3_4.yaml
+
+
 python visualize_attention.py \
       --cfg-path  /data1/user/zhangshaolong/3D_ADLLM_SHW/configs/phi4_multi_train_voxaug_tke_1_3_4.yaml \
       --checkpoint /hard_data1/user_dataset/zhangshaolong_dataset/3D_ADLLM_SHW/outputs_new/phi4_multi_voxaug_tke_a1_3_4_shareattn16/20260402074/checkpoint_16.pth \
